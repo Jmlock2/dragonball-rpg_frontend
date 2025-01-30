@@ -1,0 +1,52 @@
+.main-menu {
+  position: relative; // Permite posicionar elementos dentro de este contenedor.
+  width: 84%;
+  height: 93%; // Nos aseguramos que ocupe el 100% de la pantalla
+  display: flex; // Ajustar la pantalla para que sea flexible: Ideal para mover
+  justify-content: center;
+  align-items: center;
+
+  .background {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // Adapta la imagen al contenedor sin deformarse
+  }
+}
+
+.menu-buttons {
+  // Ajustes del grid que contiene los botones
+  position: absolute;
+  bottom: 15%; // Ajusta la posición vertical en relación al espacio vacío
+  left: 35%; // Ajustar horizontalmente
+  transform: translateX(-50%); // Para compensar el centrado derivado de "left"
+  width: 90%; // Ajustar ancho de los botones
+  max-width: 400px; // Limitar el ancho máximo de los botones en pantallas grandes
+  text-align: center; // Se centran los botones (no los centra en la pantalla) solo su contorno
+
+  ion-button {
+    // Ajustes de los botones
+    font-family: 'Press Start 2P', sans-serif; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
+    font-size: large;
+    margin: 10px 0; // Margen entre arriba y la derecha
+    // background: linear-gradient(45deg, #ffca28, #f57c00); // Estilo visual (temporal)
+    color: white; // Ajustar color de las palabras
+    border-radius: 12px; // Radio de los bordes (esquinas) de los botones
+    // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); // Sombra de los botones (temporal)
+    transition: transform 0, 2s; // Animación de los botones en cualquier dirección
+
+    &:hover {
+      transform: scale(1.1); // Animación al pasar el ratón
+    }
+  }
+}
+
+// Responsividad para móviles
+@media (max-width: 768px) {
+  .menu-buttons {
+    bottom: 25%; // Ajusta la posición en pantallas pequeñas
+  }
+
+  ion-button {
+    font-size: 0, 8rem; // Reducir el tamaño de los botones
+  }
+}

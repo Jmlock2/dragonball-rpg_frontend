@@ -1,0 +1,23 @@
+<ion-content>
+
+  <!-- Fondo del menú principal -->
+  <ion-grid class="main-menu">
+    <ion-row>
+      <ion-col size="12">
+        <ion-img src="assets/icon/menu/main3.png" class="background"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botones del menú -->
+  <ion-grid class="menu-buttons">
+    <ion-row justify-content="center">
+      <ion-col size="10" size-md="6">
+        <ion-button class="start-button">Comenzar Juego</ion-button>
+        <ion-button class="select-button" (click)="redirigir()">Seleccionar Personaje</ion-button> <!-- Te lleva al selector de personajes -->
+        <ion-button class="instructions-button">Instrucciones</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

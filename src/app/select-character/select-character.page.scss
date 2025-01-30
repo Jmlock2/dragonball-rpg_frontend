@@ -1,0 +1,86 @@
+// Contenedor del background
+.selector {
+    position: relative; // Permite posicionar elementos dentro de este contenedor.
+    width: 84%;
+    height: 93%; // Nos aseguramos que ocupe el 100% de la pantalla
+    display: flex; // Ajustar la pantalla para que sea flexible: Ideal para mover
+    justify-content: center;
+    align-items: center;
+    z-index: 0; // El fondo va por detrás
+}
+
+// Contenedor de personajes en pantalla
+.character-display {
+    position: absolute; // Asegúrate de que funciona correctamente con el contenedor padre
+    width: 20%;
+    height: 36%;
+    display: flex;
+    left: 37%;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Press Start 2P', sans-serif; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
+}
+
+// Contenedor de las flechas botón
+.arrow-container {
+    position: absolute;
+    transform: scale(200%);
+    width: 17%;
+    top: 75%;
+
+    .arrow-right {
+        width: 100%;
+
+        &:hover {
+            transform: scale(1.5); // Animación al pasar el ratón (flecha izquierda)
+        }
+    }
+
+    .arrow-left {
+
+        &:hover {
+            transform: scale(1.5); // Animación al pasar el ratón (flecha izquierda)
+        }
+    }
+
+}
+
+// Contenedor botón "Home"
+.home-container {
+    position: absolute;
+    transform: scale(300%);
+    display: flex;
+    right: 94%;
+    bottom: -0%;
+
+    .home {
+        &:hover {
+            transform: scale(1.5);
+        }
+    }
+}
+
+.confirm-select {
+    position: absolute;
+    text-align: center;
+    display: flex;
+    right: 48%;
+    transform: translateX(15%);
+    bottom: 10%;
+
+    .confirm-selector {
+        font-family: 'Press Start 2P', sans-serif; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
+        color: white; // Color de las letras
+        background-color: rgb(0, 255, 42);
+        // border-radius: 50%;
+
+        &:hover {
+            background-color: gold;
+        }
+
+    }
+}

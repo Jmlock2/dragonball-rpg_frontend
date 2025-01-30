@@ -1,0 +1,46 @@
+<ion-content>
+  <!-- Contenedor general -->
+  <ion-grid class="selector">
+    <!-- Background -->
+    <ion-row>
+      <ion-col>
+        <ion-img src="assets/icon/selector/bg1.png" class="bg1"></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <!-- Contenedor de los personajes -->
+    <ion-row class="character-display">
+      <ion-col>
+        <ion-img src="{{currentCharacter.sprite}}" alt="{{currentCharacter.name}}"></ion-img>
+        <h2>{{currentCharacter.name}}</h2>
+      </ion-col>
+    </ion-row>
+
+    <!-- Flechas para cambiar de personaje -->
+    <ion-row class="arrow-container">
+      <ion-col size="6" text-center>
+        <ion-icon class="arrow-left" name="arrow-back-outline" (click)="previousCharacter()"
+          aria-label="Previous character"></ion-icon>
+      </ion-col>
+      <ion-col size="6" text-center>
+        <ion-icon class="arrow-right" name="arrow-forward-outline" (click)="nextCharacter()"
+          aria-label="Next character"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <!-- Botón para volver al Menu de inicio -->
+    <ion-row class="home-container">
+      <ion-col>
+        <ion-icon class="home" name="home-sharp" (click)="goToMainMenu()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón "alert" para seleccionar personaje -->
+  <ion-row class="confirm-select">
+    <ion-col>
+      <ion-button class="confirm-selector" fill="clear" (click)="selectCharacter()">Confirmar</ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
