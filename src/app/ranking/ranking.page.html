@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let jugador of ranking; let i = index">
+      <ion-label>
+        <h2>#{{ i + 1 }} {{ jugador.name }}</h2>
+        <p>Puntos: {{ jugador.ranking }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

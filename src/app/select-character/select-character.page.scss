@@ -64,23 +64,21 @@ h2 {
     }
 }
 
-.confirm-select {
+.select-button {
     position: absolute;
-    text-align: center;
     display: flex;
-    right: 48%;
-    transform: translateX(15%);
+    justify-content: center;
+    align-items: center;
     bottom: 10%;
+    left: 46%; /* Mueve el botón al centro horizontal */
+    transform: translateX(-46%); /* Ajusta la posición para centrado */
+}
 
-    .confirm-selector {
-        font-family: 'Press Start 2P', sans-serif; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
-        color: white; // Color de las letras
-        background-color: rgb(0, 255, 42);
-        // border-radius: 50%;
+.confirm-selector {
+    font-family: 'Press Start 2P', sans-serif;
+    color: white;
 
-        &:hover {
-            background-color: gold;
-        }
-
+    &:hover {
+        background-color: gold;
     }
 }

@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonGrid, IonRow, IonCol, IonButton, IonContent, IonImg, IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-select-character',
   templateUrl: './select-character.page.html',
   styleUrls: ['./select-character.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonGrid, IonRow, IonCol, IonButton, IonContent, IonImg, IonIcon, CommonModule, FormsModule]
 })
 export class SelectCharacterPage {
 
@@ -21,17 +21,11 @@ export class SelectCharacterPage {
     { name: 'Trunks', sprite: '/assets/icon/selector/TrunksSL3.png' },
     { name: 'Piccolo', sprite: '/assets/icon/selector/PiccoloSL4.png' },
     { name: 'Freezer', sprite: '/assets/icon/selector/FreezerSL5.png' },
-    { name: 'Cell', sprite: '/assets/icon/selector/CellSL6.png' },
-    { name: 'Majin Buu', sprite: '/assets/icon/selector/BuuSL7.png' },
-    { name: 'Broly', sprite: '/assets/icon/selector/BrolySL8.png' }
   ];
 
   // Índice del personaje actual
   public currentIndex: number = 0;
-
-  get currentCharacter() {
-    return this.characters[this.currentIndex];
-  }
+  public currentCharacter = this.characters[this.currentIndex];
 
   constructor(private router: Router) { }
 
@@ -39,24 +33,31 @@ export class SelectCharacterPage {
   previousCharacter() {
     this.currentIndex =
       (this.currentIndex - 1 + this.characters.length) % this.characters.length;
+    this.currentCharacter = this.characters[this.currentIndex];
   }
 
   // Cambiar al personaje siguiente
   nextCharacter() {
     this.currentIndex = (this.currentIndex + 1) % this.characters.length;
+    this.currentCharacter = this.characters[this.currentIndex];
+  }
+
+  // Confirmar selección de personaje
+  selectCharacter() {
+    if (this.currentCharacter.name !== 'Goku') {
+      alert('Solo puedes escoger a Son Goku')
+      alert('Más personajes jugables en la próxima actualización')
+    } else {
+      localStorage.setItem('personaje', this.currentCharacter.name)
+      localStorage.setItem('ronda', '0'); // Se inicia la primera batalla
+      this.router.navigate(['/battle']);
+    }
   }
 
   // Volver al menu principal (Falta crear el botón en HTML)
   goToMainMenu() {
     console.log('Volviendo a menu principal...')
     this.router.navigate(['rpg']); // Nos aseguramos de que esta ruta este configurada correctamente
-  }
-
-  // Confirmar selección de personaje
-  selectCharacter() {
-    console.log('Personaje seleccionado', this.currentCharacter.name);
-    // Guardar la selección o realizar una acción, por ejemplo: this.selectedCharacter = this.currentCharacter;
-    alert(`Has seleccionado a ${this.currentCharacter.name}`)
   }
 
   ngOnInit() {

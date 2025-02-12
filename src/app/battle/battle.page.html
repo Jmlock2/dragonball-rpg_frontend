@@ -1,0 +1,97 @@
+<ion-content>
+
+  <!-- Escenario de batalla -->
+  <ion-grid class="battle-stage">
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-img src={{batallas[ronda].escenario}} class="background"></ion-img> <!-- Escenario de batalla s-->
+      </ion-col>
+    </ion-row>
+
+    <!-- Personaje del jugador (Goku) -->
+    <ion-row class="character-row">
+      <ion-col class="left">
+        <ion-img [src]="jugador.sprite" class="character" [ngClass]="{'jugador-animando': jugador.animando}"></ion-img>
+      </ion-col>
+
+      <!-- Personaje del rival -->
+      <ion-col class="right">
+        <ion-img [src]="rival.sprite" class="character" [ngClass]="{'rival-animando': rival.animando}"></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <!-- OPCIONAL - BARRA DE VIDA DEL JUGADOR -->
+    <ion-col class="barra_vida_jugador">
+      <ion-row>
+        <h3 class="player-name">{{jugador.name}}</h3> <!--NOMBRE DEL PERSONAJE QUE CONTROLA EL JUGADOR -->
+        <ion-progress-bar class="barra_vida1" id="vidaJugador" [value]="jugador.vida / 100"></ion-progress-bar>
+        <!-- Barra de vida -->
+      </ion-row>
+    </ion-col>
+
+    <!-- OPCIONAL - BARRA DE VIDA DEL RIVAL -->
+    <ion-col class="barra_vida_rival">
+      <ion-row>
+        <h3 class="rival-name">{{rival.nombre}}</h3> <!-- NOMBRE DEL PERSONAJE QUE CONTROLA EL RIVAL -->
+        <ion-progress-bar class="barra_vida2" id="vidaRival" [value]="rival.vida / 100"></ion-progress-bar>
+        <!-- Barra de vida del rival -->
+      </ion-row>
+    </ion-col>
+
+
+    <!-- Mensajes de batalla -->
+    <ion-row class="message-row">
+      <ion-col>
+        <h2 class="message">{{mensaje}}</h2>
+      </ion-col>
+    </ion-row>
+
+    <!-- CONTROLES DE COMBATE DEL JUGADOR -->
+    <ion-row class="battle-controls">
+      <ion-col size="4">
+        <ion-button class="attack-button" fill="clear" [disabled]="!turnoJugador" (click)="atacar()">Atacar</ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button class="defense-button" fill="clear" (click)="defender()"
+          [disabled]="!turnoJugador">Defensa</ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button class="special-attack-button" fill="clear" (click)="ataqueEspecial()"
+          [disabled]="!turnoJugador">Ataque Especial</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Botón de siguiente combate --> <!-- Solo aparecerá si el rival ha muerto -->
+    @if (rival.vida <= 0) { <ion-row class="next-battle">
+      <ion-col>
+        <ion-icon name="caret-forward-outline" (click)="siguienteCombate()">NEXT</ion-icon>
+      </ion-col>
+      </ion-row>
+      }
+
+      <!-- RADAR DE DRAGÓN -->
+
+      <ion-row class="radar">
+        <ion-img class="dragon_radar" src="assets/icon/battle/objects/dragon_radar.png">Siguiente combate</ion-img>
+      </ion-row>
+
+      <!-- ICONOS DE ITEMS DE CURACIÓN -->
+      <ion-row class="items-row">
+        <ion-col>
+          <ion-button class="item-bean" (click)="usarItem('semilla')" fill="clear"
+            [disabled]="!turnoJugador || jugador.items.semilla <= 0">
+            ({{jugador.items.semilla}}) Judía 🫘
+          </ion-button>
+        </ion-col>
+
+        <ion-button class="item-water" color="primary" (click)="usarItem('aguaKarin')"
+          [disabled]="!turnoJugador || jugador.items.aguaKarin <= 0">
+          💧 Agua de Karin ({{jugador.items.aguaKarin}})
+        </ion-button>
+
+      </ion-row>
+
+  </ion-grid>
+
+</ion-content>

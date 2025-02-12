@@ -1,9 +1,10 @@
 <ion-content>
+  
   <!-- Contenedor general -->
   <ion-grid class="selector">
     <!-- Background -->
     <ion-row>
-      <ion-col>
+      <ion-col class="selector-bg">
         <ion-img src="assets/icon/selector/bg1.png" class="bg1"></ion-img>
       </ion-col>
     </ion-row>
@@ -34,13 +35,14 @@
         <ion-icon class="home" name="home-sharp" (click)="goToMainMenu()"></ion-icon>
       </ion-col>
     </ion-row>
-  </ion-grid>
 
-  <!-- Botón "alert" para seleccionar personaje -->
-  <ion-row class="confirm-select">
+    <!-- Botón para seleccionar personaje -->
+  <ion-row class="select-button">
     <ion-col>
-      <ion-button class="confirm-selector" fill="clear" (click)="selectCharacter()">Confirmar</ion-button>
+      <ion-button (click)="selectCharacter()" fill="clear" class="confirm-selector">Confirmar personaje</ion-button>
     </ion-col>
   </ion-row>
+  
+  </ion-grid>
 
 </ion-content>

@@ -1,0 +1,185 @@
+.battle-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+
+}
+
+.background {
+    //CONFIGURACIÓN BUENISIMA
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    right: 0%;
+    top: 0%;
+    object-fit: cover;
+}
+
+.character-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// CONFIGURACIÓN DE LOS PERSONAJES
+.character {
+    max-width: 700px;
+    width: 18%;
+    height: auto;
+    transition: transform 0, 3s ease-in-out;
+}
+
+/* 🔹 Goku se mueve hacia adelante cuando ataca */
+.jugador-animando {
+    // transform: translateX(100%);
+}
+
+/* 🔹 El rival reacciona al golpe */
+.rival-animando {
+    animation: golpeado 0.3s ease-in-out;
+}
+
+@keyframes golpeado {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+// POSICIÓN DE LOS PERSONAJES
+
+.left {
+    display: flex;
+    justify-content: flex-start;
+    position: absolute; // Asegura una posición fija
+    bottom: 3%;
+    right: -10%;
+    object-fit: cover;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute; // Asegura una posición fija
+    bottom: 3%;
+    left: 70%;
+    transform: scaleX(-1); // Invertir la imagen del rival
+
+    .rival-name {
+        transform: scaleX(-1);
+    }
+}
+
+.next-battle {
+    position: fixed;
+    bottom: 50%;
+    left: 95%;
+
+    ion-icon {
+        transform: scale(500%);
+        background-color: blue;
+        border-radius: 10px;
+    }
+
+    &:hover {
+        transform: scale(1.5);
+    }
+}
+
+// CONFIGURACIÓN DEL NOMBRE DEL JUGADOR
+.player-name {
+    position: absolute;
+    display: flex;
+    top: 2%;
+    right: 225%;
+    justify-content: center;
+    text-align: center;
+    // ESTÉTICA
+    font-family: 'Press Start 2P', sans-serif;
+    background-color: black;
+}
+
+// CONFIGURACIÓN DEL NOMBRE DEL RIVAL
+.rival-name {
+    position: absolute;
+    display: flex;
+    top: -98%;
+    left: 210%;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Press Start 2P', sans-serif;
+    background-color: black;
+}
+
+// BARRA DE VIDA DEL JUGADOR
+
+.barra_vida_jugador {
+    position: relative;
+    width: 20%;
+
+    .barra_vida1 {
+        // border: 10px solid blue;
+        position: absolute;
+        display: flex;
+        top: 35%;
+        right: 190%;
+        // ESTÉTICA
+    }
+}
+
+// BARRA DE VIDA DEL RIVAL
+
+.barra_vida_rival {
+    width: 20%;
+
+    .barra_vida2 {
+        position: absolute;
+        display: flex;
+        top: -65%;
+        right: -180%;
+        width: 100%;
+        // border: 10px solid red;
+    }
+}
+
+// MENSAJES DE BATALLA
+
+.message-row {
+    transform: scale(80%);
+    position: absolute;
+    display: flex;
+    top: 20%;
+}
+
+.message {
+    position: static;
+    display: flex;
+    width: 100%;
+    font-family: 'Press Start 2P', sans-serif;
+    background-color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
+        3px 3px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+// BOTONES DE ATAQUE
+.battle-controls {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -40%;
+}
