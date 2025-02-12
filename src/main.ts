@@ -21,7 +21,7 @@ bootstrapApplication(AppComponent, {
       domain: 'dev-yonz0ue78cor27pr.us.auth0.com',
       clientId: 'YCObZcaDnn2XMenaNSoyyRmhUbncXYux',
       authorizationParams: {
-        redirect_uri: 'http://localhost:8100' // Asegúrate de que la URL coincida
+        redirect_uri: 'https://dragonballrpg-3a242.web.app/' // Asegúrate de que la URL coincida
       }
     }),
 

@@ -24,7 +24,7 @@ export class RankingPage implements OnInit {
   }
 
   obtenerRanking() {
-    this.http.get('http://localhost:3000/usuarios/ranking')
+    this.http.get('https://dragonball-rpg-backend.onrender.com/usuarios/ranking')
       .subscribe((data: any) => {
         this.ranking = data;
       }, error => {

@@ -279,7 +279,7 @@ export class BattlePage implements OnInit {
       puntos: 100 // 🔹 Puntos que sumará al ganar el torneo
     };
 
-    this.http.put('http://localhost:3000/usuarios/ranking', userData)
+    this.http.put('https://dragonball-rpg-backend.onrender.com/usuarios/ranking', userData)
       .subscribe(response => {
         console.log('Ranking actualizado:', response);
         alert("¡Has ganado el torneo! +100 puntos añadidos");

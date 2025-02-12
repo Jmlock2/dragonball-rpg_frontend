@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
     };
 
     console.log('Datos enviados al backend:', userData); // Log para verificar los datos
-    this.http.post('http://localhost:3000/usuarios', userData)
+    this.http.post('https://dragonball-rpg-backend.onrender.com/usuarios', userData)
       .subscribe(response => {
         console.log('Usuario guardado en el backend', response);
       }, error => {
