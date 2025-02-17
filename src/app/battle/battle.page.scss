@@ -140,6 +140,7 @@
     }
 }
 
+
 // BARRA DE VIDA DEL RIVAL
 
 .barra_vida_rival {
@@ -175,11 +176,86 @@
 
 }
 
-// BOTONES DE ATAQUE
+// BOTONES DE ATAQUE, DEFENSA Y ATAQUE ESPECIAL
 .battle-controls {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: -40%;
+    top: -50%;
+    width: 80%; // Ajusta el ancho del contenedor para que los botones estén más juntos
+    margin: 0 auto; // Centra el contenedor horizontalmente
 }
+
+.battle-control-col {
+    padding: 0 5px; // Reduce el espacio entre las columnas
+}
+
+.attack-button, .defense-button, .special-attack-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+    left: 30%;
+    // padding: 0;
+    background: none;
+    
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: all 0.3s ease-in-out;
+    }
+    
+}
+
+ion-content {
+    font-family: Press Start 2P, sans-serif;
+}
+
+/* ICONOS DE ITEMS DE CURACIÓN */
+.items-row {
+    position: absolute; /* Posición absoluta para que no interfiera con otros elementos */
+    bottom: 5%; /* Ajusta la posición vertical */
+    left: 55%; /* Centra horizontalmente */
+    transform: translateX(-55%); /* Ajusta el centrado horizontal */
+    display: flex; /* Para alinear los items horizontalmente */
+    justify-content: center; /* Centra los items horizontalmente */
+    align-items: center; /* Centra los items verticalmente */
+    width: auto; /* Ancho automático para que se ajuste al contenido */
+}
+
+.items-row ion-col {
+    padding: 0 10px; /* Espacio entre los items */
+}
+
+.item-bean, .item-water {
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    // padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.item-water {
+    position: absolute;
+    display: flex;
+    left: 50%;
+    background: transparent;
+}
+
+.item-bean img, .item-water img {
+    max-width: 100%;
+    height: auto;
+    margin-left: 0px; /* Espacio entre el texto y la imagen */
+}
+

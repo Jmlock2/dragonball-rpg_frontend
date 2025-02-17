@@ -18,10 +18,10 @@ export class BattlePage implements OnInit {
 
   // Lista de batallas predefinidas
   public batallas = [
-    { name: 'Piccolo', escenario: 'assets/icon/battle/stages/torneo.png', sprite: 'assets/icon/battle/pjs/piccolo_battle.gif', imagenGolpe: 'assets/icon/battle/hits/piccolo_hit.png', attack_hit: 'assets/icon/battle/attacks/piccolo_attack.png', defense: 'assets/icon/battle/defense/piccolo_defense.png' },
-    { name: 'Vegeta', escenario: 'assets/icon/battle/stages/desierto.png', sprite: 'assets/icon/battle/pjs/vegeta_battle.gif', imagenGolpe: 'assets/icon/battle/hits/vegeta_hit.png', attack_hit: 'assets/icon/battle/attacks/vegeta_attack.gif', defense: 'assets/icon/battle/defense/vegeta_defense.png' },
-    { name: 'Trunks', escenario: 'assets/icon/battle/stages/ciudad.png', sprite: 'assets/icon/battle/pjs/trunks_battle.gif', imagenGolpe: 'assets/icon/battle/hits/trunks_hit.png', attack_hit: 'assets/icon/battle/attacks/trunks_attack.gif', defense: 'assets/icon/battle/defense/trunks_defense.png' },
-    { name: 'Freezer', escenario: 'assets/icon/battle/stages/namek.png', sprite: 'assets/icon/battle/pjs/freezer_battle.gif', imagenGolpe: 'assets/icon/battle/hits/freezer_hit.png', attack_hit: 'assets/icon/battle/attacks/freezer_attack.png', defense: 'assets/icon/battle/defense/freezer_defense.png' },
+    { name: 'Piccolo', escenario: 'assets/icon/battle/stages/torneo.png', sprite: 'assets/icon/battle/pjs/piccolo_battle.gif', imagenGolpe: 'assets/icon/battle/hits/piccolo_hit.png', attack_hit: 'assets/icon/battle/attacks/piccolo_attack.png', defense: 'assets/icon/battle/defense/piccolo_defense.png', defeated: 'assets/icon/battle/defeated/piccolo_derrotado.png' },
+    { name: 'Vegeta', escenario: 'assets/icon/battle/stages/desierto.png', sprite: 'assets/icon/battle/pjs/vegeta_battle.gif', imagenGolpe: 'assets/icon/battle/hits/vegeta_hit.png', attack_hit: 'assets/icon/battle/attacks/vegeta_attack.gif', defense: 'assets/icon/battle/defense/vegeta_defense.png', defeated: 'assets/icon/battle/defeated/vegeta_derrotado.png' },
+    { name: 'Trunks', escenario: 'assets/icon/battle/stages/ciudad.png', sprite: 'assets/icon/battle/pjs/trunks_battle.gif', imagenGolpe: 'assets/icon/battle/hits/trunks_hit.png', attack_hit: 'assets/icon/battle/attacks/trunks_attack.gif', defense: 'assets/icon/battle/defense/trunks_defense.png', defeated: 'assets/icon/battle/defeated/trunks_derrotado.png' },
+    { name: 'Freezer', escenario: 'assets/icon/battle/stages/namek.png', sprite: 'assets/icon/battle/pjs/freezer_battle.gif', imagenGolpe: 'assets/icon/battle/hits/freezer_hit.png', attack_hit: 'assets/icon/battle/attacks/freezer_attack.png', defense: 'assets/icon/battle/defense/freezer_defense.png', defeated: 'assets/icon/battle/defeated/freezer_derrotado.png' },
   ];
 
   // Lista del jugador
@@ -30,7 +30,7 @@ export class BattlePage implements OnInit {
     sprite: 'assets/icon/battle/pjs/goku_battle.gif',
     vida: 100,
     animando: false,
-    items: { semilla: 1, aguaKarin: 2 } as { semilla: number; aguaKarin: number } // Definimos el tipo explícitamente
+    items: { semilla: 2, aguaKarin: 3 } as { semilla: number; aguaKarin: number } // Definimos el tipo explícitamente
   };
 
   public rival: any = null;
@@ -72,6 +72,7 @@ export class BattlePage implements OnInit {
       imagenGolpe: combateActual.imagenGolpe,
       attack_hit: combateActual.attack_hit,
       defense: combateActual.defense,
+      defeated: combateActual.defeated,
       vida: 100,
       animando: false
     };
@@ -116,6 +117,7 @@ export class BattlePage implements OnInit {
     setTimeout(() => {
       let daño = Math.floor(Math.random() * 20) + 10;
       this.rival.vida -= daño;
+      this.actualizarVidaRival();
       this.mensaje = `¡Goku golpea a ${this.rival.nombre} causando ${daño} de daño!`;
 
       // 🔹 Cambia la imagen del rival a la de golpe recibido
@@ -132,6 +134,7 @@ export class BattlePage implements OnInit {
 
         if (this.rival.vida <= 0) {
           this.rival.vida = 0;
+          this.rival.sprite = this.rival.defeated;
           this.mensaje = "¡Goku Wins!";
           return;
         }
@@ -154,24 +157,50 @@ export class BattlePage implements OnInit {
 
     setTimeout(() => {
       this.turnoJugador = false; // 🔹 Cambia turno al rival
+      this.jugador.sprite = 'assets/icon/battle/pjs/goku_battle.gif';
       this.ataqueRival(); // 🔹 Llamamos a la función de ataque del rival
     }, 1500);
   }
 
   // ATAQUE ESPECIAL DEL JUGADOR
   ataqueEspecial() {
-    let daño = Math.floor(Math.random() * 30) + 20; // Genera un número aleatorio entre 0 y 29 (+20)
-    this.rival.vida -= daño;
-    this.mensaje = `Goku ataca a ${this.rival.nombre} con un ataque especial de ${daño} puntos de daño.`;
+    if (!this.turnoJugador) return;
 
-    if (this.rival.vida <= 0) {
-      this.rival.vida = 0;
-      this.mensaje = `Goku Wins!`;
-      return;
-    }
     this.turnoJugador = false;
-    setTimeout(() => this.ataqueRival(), 1500);
+    this.mensaje = "¡Goku usa su ataque especial!";
 
+    // 🔹 Cambia la imagen de Goku a animación de ataque
+    this.jugador.animando = true;
+    this.jugador.sprite = 'assets/icon/battle/attacks/goku_anim1.gif'; // Cambia la imagen del jugador a la de ataque especial
+
+    setTimeout(() => {
+      let daño = Math.floor(Math.random() * 30) + 20;
+      this.rival.vida -= daño;
+      this.actualizarVidaRival();
+      this.mensaje = `¡Goku golpea a ${this.rival.nombre} con su ataque especial causando ${daño} de daño!`;
+
+      // 🔹 Cambia la imagen del rival a la de golpe recibido
+      this.rival.animando = true;
+      this.rival.sprite = this.rival.imagenGolpe;
+
+      setTimeout(() => {
+        this.jugador.animando = false;
+        this.rival.animando = false;
+
+        // 🔹 Volver a la imagen normal del rival
+        this.jugador.sprite = 'assets/icon/battle/pjs/goku_battle.gif';
+        this.rival.sprite = this.batallas[this.ronda].sprite;
+
+        if (this.rival.vida <= 0) {
+          this.rival.vida = 0;
+          this.rival.sprite = this.rival.defeated;
+          this.mensaje = "¡Goku Wins!";
+          return;
+        }
+
+        setTimeout(() => this.ataqueRival(), 1000);
+      }, 500); // Tiempo de golpe 
+    }, 800); // Tiempo del rival
   }
 
   // 🔹 Modificar el ataque del rival para que tenga en cuenta la defensa
@@ -214,6 +243,7 @@ export class BattlePage implements OnInit {
     }
 
     this.jugador.vida -= daño;
+    this.actualizarVidaJugador();
     this.defendiendo = false; // Reseteamos la defensa después del ataque
 
     // 🔹 Cambia la imagen del jugador a la de golpe recibido
@@ -230,8 +260,9 @@ export class BattlePage implements OnInit {
 
         if (this.jugador.vida <= 0) {
           this.jugador.vida = 0;  // Establece la vida del jugador en 0
+          this.jugador.sprite = 'assets/icon/battle/defeated/goku_derrotado.png'; // Cambia la imagen del jugador a la de derrota
           this.mensaje = `GAME OVER!`; // Si el jugador pierde, GAME OVER
-          setTimeout(() => this.router.navigate(['rpg']), 2000);
+          setTimeout(() => this.router.navigate(['rpg']), 5000);
           return;
         }
 
@@ -240,20 +271,37 @@ export class BattlePage implements OnInit {
     }, 700); // Tiempo para volver a la imagen normal del rival
   }
 
-  // AJUSTE DE BARRA DE VIDA DEL RIVAL EN TIEMPO REAL
+  // 🎇 AJUSTE DE BARRA DE VIDA DEL RIVAL EN TIEMPO REAL
 
   actualizarVidaRival() {
-    let barraRival = document.getElementById('vidaRival');
+    let barraRival = document.getElementById('vidaRival') as HTMLIonProgressBarElement;
     if (barraRival) {
-      barraRival.style.width = this.rival.vida + `%`;
+
+      if (this.rival.vida <= 25) {
+        barraRival.color = 'danger';
+      } else if (this.rival.vida <= 50) {
+        barraRival.color = 'warning';
+      } else {
+        barraRival.color = 'success';
+      }
     }
   }
 
-  // AJUSTE DE BARRA DE VIDA DEL JUGADOR EN TIEMPO REAL
+  // 🎇 AJUSTE DE BARRA DE VIDA DEL JUGADOR EN TIEMPO REAL
   actualizarVidaJugador() {
-    let barraJugador = document.getElementById('vidaJugador');
+    let barraJugador = document.getElementById('vidaJugador') as HTMLIonProgressBarElement;
     if (barraJugador) {
-      barraJugador.style.width = this.jugador.vida + `%`;
+      // No es necesario actualizar el ancho aquí
+      // La barra de progreso se ajustará automáticamente al contenedor
+
+      // Establece el color según la vida del jugador
+      if (this.jugador.vida <= 25) {
+        barraJugador.color = 'danger';
+      } else if (this.jugador.vida <= 50) {
+        barraJugador.color = 'warning';
+      } else {
+        barraJugador.color = 'success';
+      }
     }
   }
 
@@ -262,6 +310,8 @@ export class BattlePage implements OnInit {
     if (this.rival.vida <= 0) {
       this.ronda++;
       localStorage.setItem('ronda', this.ronda.toString());
+      this.mensaje = '';
+      this.turnoJugador = true;
       this.cargarCombate();
     }
 
@@ -289,3 +339,9 @@ export class BattlePage implements OnInit {
       });
   }
 }
+
+// CUANDO EL JUGADOR PIERDA, LAS RONDAS SERÁN RESETEADAS
+
+// AGREGAR SONIDO AL JUEGO
+
+// CREAR BASE DE DATOS EN RENDER.COM PARA LA SUMA DE PUNTOS (RANKING)

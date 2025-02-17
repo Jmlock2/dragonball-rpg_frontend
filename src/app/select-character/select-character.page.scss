@@ -1,12 +1,27 @@
 // Contenedor del background
 .selector {
     position: relative; // Permite posicionar elementos dentro de este contenedor.
-    width: 84%;
-    height: 93%; // Nos aseguramos que ocupe el 100% de la pantalla
+    width: 100%;
+    height: 100%; // Nos aseguramos que ocupe el 100% de la pantalla
     display: flex; // Ajustar la pantalla para que sea flexible: Ideal para mover
     justify-content: center;
     align-items: center;
     z-index: 0; // El fondo va por detrás
+}
+
+.selector-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bg1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 // Contenedor de personajes en pantalla
@@ -16,6 +31,11 @@
     height: 36%;
     display: flex;
     left: 37%;
+}
+
+.character-display img {
+    max-width: 100%; // Asegurar que la imagen no se desborde del contenedor
+    height: auto;
 }
 
 h2 {
@@ -54,10 +74,12 @@ h2 {
     position: absolute;
     transform: scale(300%);
     display: flex;
-    right: 94%;
-    bottom: -0%;
+    top: 93%; // Ajustar la posición vertical
+    left: 3%; // Ajustar la posición horizontal
 
     .home {
+        cursor: pointer;
+
         &:hover {
             transform: scale(1.5);
         }
@@ -79,6 +101,6 @@ h2 {
     color: white;
 
     &:hover {
-        background-color: gold;
+        background-color: rgb(60, 128, 39);
     }
 }

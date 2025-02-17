@@ -1,6 +1,8 @@
-import { Routes, CanActivateFn } from '@angular/router';
+import { provideRouter, Routes, CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 const authGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
@@ -29,10 +31,13 @@ export const routes: Routes = [
   },
   {
     path: 'battle',
-    loadComponent: () => import('./battle/battle.page').then( m => m.BattlePage)
+    loadComponent: () => import('./battle/battle.page').then(m => m.BattlePage),
+    // canActivate: [authGuard]
   },
   {
     path: 'ranking',
-    loadComponent: () => import('./ranking/ranking.page').then( m => m.RankingPage)
+    loadComponent: () => import('./ranking/ranking.page').then(m => m.RankingPage),
+    canActivate: [authGuard]
   },
+
 ];

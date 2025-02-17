@@ -28,17 +28,17 @@
 
   ion-button {
     // Ajustes de los botones
-    font-family: 'Press Start 2P', sans-serif; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
+    font-family: 'Press Start 2P', sans-serif, Arial; // Asignamos una familia de fuentes de letra (con una fuente secundaria)
     font-size: large;
-    margin: 10px 0; // Margen entre arriba y la derecha
+    margin: 20px 0; // Margen entre arriba y la derecha
     // background: linear-gradient(45deg, #ffca28, #f57c00); // Estilo visual (temporal)
     color: white; // Ajustar color de las palabras
     border-radius: 12px; // Radio de los bordes (esquinas) de los botones
+    transform: scale(150%);
     // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); // Sombra de los botones (temporal)
-    transition: transform 0, 2s; // Animación de los botones en cualquier dirección
 
     &:hover {
-      transform: scale(1.1); // Animación al pasar el ratón
+      transform: scale(2.1); // Animación al pasar el ratón
     }
   }
 }

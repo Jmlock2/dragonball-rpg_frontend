@@ -13,8 +13,7 @@ import {
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [RouterLink, RouterLinkActive, IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
-    IonMenuButton, IonMenuToggle, IonListHeader],
+  imports: [RouterLink, RouterLinkActive, IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet, IonMenuToggle, IonListHeader],
 })
 export class AppComponent {
   public appPages = [

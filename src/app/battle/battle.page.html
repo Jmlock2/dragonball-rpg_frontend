@@ -49,16 +49,23 @@
 
     <!-- CONTROLES DE COMBATE DEL JUGADOR -->
     <ion-row class="battle-controls">
-      <ion-col size="4">
-        <ion-button class="attack-button" fill="clear" [disabled]="!turnoJugador" (click)="atacar()">Atacar</ion-button>
+
+      <ion-col size="4" class="battle-control-col">
+        <ion-button class="attack-button" fill="clear" [disabled]="!turnoJugador" (click)="atacar()">
+          <img src="assets/icon/battle/objects/punch.png" alt="Atacar" title="Atacar">
+        </ion-button>
       </ion-col>
-      <ion-col size="4">
-        <ion-button class="defense-button" fill="clear" (click)="defender()"
-          [disabled]="!turnoJugador">Defensa</ion-button>
+
+      <ion-col size="4" class="battle-control-col">
+        <ion-button class="defense-button" fill="clear" [disabled]="!turnoJugador" (click)="defender()">
+          <img src="assets/icon/battle/objects/shield.png" alt="Defensa" title="Defensa">
+        </ion-button>
       </ion-col>
-      <ion-col size="4">
-        <ion-button class="special-attack-button" fill="clear" (click)="ataqueEspecial()"
-          [disabled]="!turnoJugador">Ataque Especial</ion-button>
+
+      <ion-col size="4" class="battle-control-col">
+        <ion-button class="special-attack-button" fill="clear" [disabled]="!turnoJugador" (click)="ataqueEspecial()">
+          <img src="assets/icon/battle/objects/special.png" alt="Ataque Especial" title="Ataque Especial">
+        </ion-button>
       </ion-col>
     </ion-row>
 
@@ -70,24 +77,22 @@
       </ion-row>
       }
 
-      <!-- RADAR DE DRAGÓN -->
-
-      <ion-row class="radar">
-        <ion-img class="dragon_radar" src="assets/icon/battle/objects/dragon_radar.png">Siguiente combate</ion-img>
-      </ion-row>
-
       <!-- ICONOS DE ITEMS DE CURACIÓN -->
       <ion-row class="items-row">
+
         <ion-col>
           <ion-button class="item-bean" (click)="usarItem('semilla')" fill="clear"
             [disabled]="!turnoJugador || jugador.items.semilla <= 0">
-            ({{jugador.items.semilla}}) Judía 🫘
+            ({{jugador.items.semilla}})
+            <img src="assets/icon/battle/items/senzu2.png" alt="Senzu" title="Senzu">
           </ion-button>
         </ion-col>
 
-        <ion-button class="item-water" color="primary" (click)="usarItem('aguaKarin')"
+
+        <ion-button class="item-water" color="primary" (click)="usarItem('aguaKarin')" fill="clear"
           [disabled]="!turnoJugador || jugador.items.aguaKarin <= 0">
-          💧 Agua de Karin ({{jugador.items.aguaKarin}})
+          ({{jugador.items.aguaKarin}})
+          <img src="assets/icon/battle/items/water.png" alt="Agua de Karin" title="Agua de Karin">
         </ion-button>
 
       </ion-row>
