@@ -60,6 +60,7 @@ export class BattlePage implements OnInit {
 
     if (this.ronda >= this.batallas.length) {
       alert('¡Has ganado el torneo!');
+      this.actualizarRanking();
       this.router.navigate(['ranking']);
       return;
     }
@@ -313,6 +314,7 @@ export class BattlePage implements OnInit {
       this.mensaje = '';
       this.turnoJugador = true;
       this.cargarCombate();
+      this.actualizarRanking();
     }
 
     // SI EL JUGADOR GANA EL TORNEO
@@ -321,10 +323,30 @@ export class BattlePage implements OnInit {
     }
   }
 
+  actualizarRanking(): void {
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        const data = {
+          auth0_id: user.sub, // ID de Auth0
+          name: user.name, // Nombre del usuario
+          score: 100 // Se sumarán 100 puntos por victoria
+        };
+  
+        console.log("🏆 Enviando actualización de ranking:", data);
+  
+        this.http.put('https://dragonball-rpg-backend.onrender.com/ranking', data).subscribe({
+          next: (response: any) => {
+            console.log("✅ Ranking actualizado correctamente:", response);
+          },
+          error: (error) => {
+            console.error("❌ Error al actualizar ranking:", error);
+          }
+        });
+      }
+    });
+  }
+  
 }
-
-
-
 
 
 // CUANDO EL JUGADOR PIERDA, LAS RONDAS SERÁN RESETEADAS
