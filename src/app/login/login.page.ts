@@ -39,16 +39,25 @@ export class LoginPage implements OnInit {
 
   datosUsuario(user: any): void {
     let userData = {
-      name: user.name,
-      email: user.email
+      auth0_id: user.sub,  // 🔹 Auth0 ID (MUY IMPORTANTE)
+      name: user.name
     };
 
-    console.log('Datos enviados al backend:', userData); // Log para verificar los datos
-    this.http.post('https://dragonball-rpg-backend.onrender.com/usuarios', userData)
-      .subscribe(response => {
-        console.log('Usuario guardado en el backend', response);
-      }, error => {
-        console.error('Error al guardar el usuario en el backend', error);
-      });
+    console.log('Datos enviados al backend:', userData); // 🔹 Revisar que `auth0_id` aparezca aquí
+
+    this.http.post('https://dragonball-rpg-backend.onrender.com/register', userData).subscribe({
+      next: (response: any) => {
+        if (response.message === "Usuario ya está registrado") {
+          console.log("✅ Usuario ya está registrado.");
+        } else {
+          console.log("🆕 Usuario registrado correctamente:", response);
+        }
+      },
+      error: (error) => {
+        console.error("❌ Error al registrar usuario:", error);
+      }
+    });
+
   }
+
 }

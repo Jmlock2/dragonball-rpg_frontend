@@ -1,10 +1,36 @@
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let jugador of ranking; let i = index">
-      <ion-label>
-        <h2>#{{ i + 1 }} {{ jugador.name }}</h2>
-        <p>Puntos: {{ jugador.ranking }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-grid>
+    <!-- Título -->
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <h2>Ranking de Jugadores</h2>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Encabezados de columna -->
+    <ion-row class="ranking-header">
+      <ion-col size="2">
+        <h3>#</h3>
+      </ion-col>
+      <ion-col size="6">
+        <h3>Nombre</h3>
+      </ion-col>
+      <ion-col size="4">
+        <h3>Puntos</h3>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Lista de jugadores -->
+    <ion-row *ngFor="let player of ranking; let i = index" class="ranking-item">
+      <ion-col size="2">
+        <p>{{ i + 1 }}</p>
+      </ion-col>
+      <ion-col size="6">
+        <p>{{ player.name }}</p>
+      </ion-col>
+      <ion-col size="4">
+        <p>{{ player.score }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
