@@ -30,7 +30,12 @@ export class BattlePage implements OnInit {
     sprite: 'assets/icon/battle/pjs/goku_battle.gif',
     vida: 100,
     animando: false,
-    items: { semilla: 2, aguaKarin: 3 } as { semilla: number; aguaKarin: number } // Definimos el tipo explícitamente
+    items: { semilla: 3, aguaKarin: 4 } as { semilla: number; aguaKarin: number } // Definimos el tipo explícitamente
+  };
+
+  public usosItem: { [item: string]: number } = {
+    semilla: 0,
+    aguaKarin: 0
   };
 
   public rival: any = null;
@@ -43,6 +48,7 @@ export class BattlePage implements OnInit {
 
   public defendiendo = false; // Nuevo estado para saber si el jugador está defendiendo
 
+  public ataqueEspecialUsado: number = 0; // Variable para contar el uso del ataque especial
 
   constructor(private router: Router, private http: HttpClient, private auth: AuthService) { }
 
@@ -87,6 +93,11 @@ export class BattlePage implements OnInit {
     if (!this.turnoJugador) return; // Solo se pueden usar en el turno del jugador
 
     if (this.jugador.items[item] > 0) { // 🔹 Si el jugador tiene items disponibles
+      if (this.usosItem[item] >= 2) {
+        this.mensaje = "¡No puedes usar más de este ítem en esta ronda!";
+        return;
+      }
+
       if (item === 'semilla') {
         this.jugador.vida = 100; // 🔹 Cura toda la vida
         this.actualizarVidaJugador();
@@ -98,6 +109,7 @@ export class BattlePage implements OnInit {
       }
 
       this.jugador.items[item]--; // 🔹 Reduce la cantidad de ítems
+      this.usosItem[item]++; // 🔹 Incrementa el contador de usos
       this.turnoJugador = false; // 🔹 Cambia el turno al rival después de usar el ítem
 
       setTimeout(() => this.ataqueRival(), 1500); // 🔹 Turno del rival tras usar el ítem
@@ -171,12 +183,19 @@ export class BattlePage implements OnInit {
   ataqueEspecial() {
     if (!this.turnoJugador) return;
 
+    if (this.ataqueEspecialUsado >= 2) { // Verifica si se ha utilizado 2 veces
+      this.mensaje = "¡No puedes usar el ataque especial más veces!";
+      return;
+    }
+
+    this.ataqueEspecialUsado++; // Incrementa el contador
+
     this.turnoJugador = false;
     this.mensaje = "¡Goku usa su ataque especial!";
 
     // 🔹 Cambia la imagen de Goku a animación de ataque
     this.jugador.animando = true;
-    this.jugador.sprite = 'assets/icon/battle/attacks/goku_anim1.gif'; // Cambia la imagen del jugador a la de ataque especial
+    this.jugador.sprite = 'assets/icon/battle/special/kaioken.gif'; // Cambia la imagen del jugador a la de ataque especial
 
     setTimeout(() => {
       let daño = Math.floor(Math.random() * 30) + 20;
@@ -318,9 +337,15 @@ export class BattlePage implements OnInit {
       this.ronda++;
       localStorage.setItem('ronda', this.ronda.toString());
       this.mensaje = '';
+      this.jugador.sprite = 'assets/icon/battle/pjs/goku_battle.gif'; // Cambia la imagen del jugador a la normal
       this.turnoJugador = true;
-      this.cargarCombate();
-      this.actualizarRanking();
+      this.ataqueEspecialUsado = 0; // Resetear el contador
+      this.usosItem = { semilla: 0, aguaKarin: 0 };
+
+      this.cargarCombate(); // Primero carga el nuevo combate
+      setTimeout(() => { // Espera un breve instante antes de actualizar el ranking
+        this.actualizarRanking();
+      }, 100); // Le damos 100ms para asegurarnos de que `this.ronda` esté actualizado
     }
 
     // SI EL JUGADOR GANA EL TORNEO
@@ -332,18 +357,14 @@ export class BattlePage implements OnInit {
   actualizarRanking(): void {
     this.auth.user$.subscribe(user => {
       if (user) {
-        // Puntos según la ronda actual
-        let puntosPorRonda = [50, 100, 150, 200]; 
-        let puntos = this.ronda < puntosPorRonda.length ? puntosPorRonda[this.ronda] : 200; // Máximo 200 puntos en la última ronda
-        
         let data = {
           auth0_id: user.sub, // ID de Auth0
           name: user.name, // Nombre del usuario
-          score: puntos // Puntos basados en la ronda
+          score: 100 // Se sumarán 100 puntos por victoria
         };
-  
-        console.log(`🏆 Enviando actualización de ranking: ${puntos} puntos`, data);
-  
+
+        console.log("🏆 Enviando actualización de ranking:", data);
+
         this.http.put('https://dragonball-rpg-backend.onrender.com/ranking', data).subscribe({
           next: (response: any) => {
             console.log("✅ Ranking actualizado correctamente:", response);
@@ -355,9 +376,9 @@ export class BattlePage implements OnInit {
       }
     });
   }
-  
-  
+
 }
+
 
 
 // CUANDO EL JUGADOR PIERDA, LAS RONDAS SERÁN RESETEADAS

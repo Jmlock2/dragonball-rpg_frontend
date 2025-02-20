@@ -63,7 +63,7 @@
       </ion-col>
 
       <ion-col size="4" class="battle-control-col">
-        <ion-button class="special-attack-button" fill="clear" [disabled]="!turnoJugador" (click)="ataqueEspecial()">
+        <ion-button class="special-attack-button" fill="clear" [disabled]="!turnoJugador || ataqueEspecialUsado >= 2" (click)="ataqueEspecial()">
           <img src="assets/icon/battle/objects/special.png" alt="Ataque Especial" title="Ataque Especial">
         </ion-button>
       </ion-col>
