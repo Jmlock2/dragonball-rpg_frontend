@@ -191,7 +191,7 @@ export class BattlePage implements OnInit {
     this.ataqueEspecialUsado++; // Incrementa el contador
 
     this.turnoJugador = false;
-    this.mensaje = "¡Goku usa su ataque especial!";
+    this.mensaje = "¡¡KAIOKEN!!";
 
     // 🔹 Cambia la imagen de Goku a animación de ataque
     this.jugador.animando = true;
@@ -235,6 +235,14 @@ export class BattlePage implements OnInit {
     if (accionCPU < 0.3) { // 30% de probabilidad de que el rival se defienda
       this.mensaje = `${this.rival.nombre} se pone en guardia.`;
       this.rival.sprite = this.rival.defense; // Cambia la imagen del rival a la de defensa
+
+      // 🔥 SOLO SI ES FREEZER, RECUPERA VIDA AL DEFENDERSE
+      if (this.rival.nombre === 'Freezer') {
+        let vidaRecuperada = Math.floor(Math.random() * 10) + 5; // Recupera entre 5 y 15 de vida
+        this.rival.vida = Math.min(this.rival.vida + vidaRecuperada, 100); // No puede pasar de 100
+        this.actualizarVidaRival();
+        this.mensaje += ` ¡Freezer recupera ${vidaRecuperada} puntos de vida! 🔥`;
+      }
 
       setTimeout(() => {
         this.turnoJugador = true;
@@ -286,7 +294,6 @@ export class BattlePage implements OnInit {
         if (this.jugador.vida <= 0) {
           this.jugador.vida = 0;  // Establece la vida del jugador en 0
           this.jugador.sprite = 'assets/icon/battle/defeated/goku_derrotado.png'; // Cambia la imagen del jugador a la de derrota
-          this.rival.sprite = this.rival.victory;
           this.mensaje = `GAME OVER!`; // Si el jugador pierde, GAME OVER
           setTimeout(() => this.router.navigate(['rpg']), 5000);
           return;
@@ -296,7 +303,6 @@ export class BattlePage implements OnInit {
       }, 400); // Tiempo para volver a la imagen normal del jugador
     }, 700); // Tiempo para volver a la imagen normal del rival
   }
-
   // 🎇 AJUSTE DE BARRA DE VIDA DEL RIVAL EN TIEMPO REAL
 
   actualizarVidaRival() {
