@@ -83,7 +83,7 @@
         <ion-col>
           <ion-button class="item-bean" (click)="usarItem('semilla')" fill="clear"
             [disabled]="!turnoJugador || jugador.items.semilla <= 0">
-            ({{jugador.items.semilla}})
+            <span class="item-count">({{jugador.items.semilla}})</span>
             <img src="assets/icon/battle/items/senzu2.png" alt="Senzu" title="Senzu">
           </ion-button>
         </ion-col>
@@ -91,7 +91,7 @@
 
         <ion-button class="item-water" color="primary" (click)="usarItem('aguaKarin')" fill="clear"
           [disabled]="!turnoJugador || jugador.items.aguaKarin <= 0">
-          ({{jugador.items.aguaKarin}})
+          <span class="item-count">({{jugador.items.aguaKarin}})</span>
           <img src="assets/icon/battle/items/water.png" alt="Agua de Karin" title="Agua de Karin">
         </ion-button>
 

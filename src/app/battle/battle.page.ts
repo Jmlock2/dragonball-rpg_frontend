@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { AuthService } from '@auth0/auth0-angular';
 
+
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.page.html',

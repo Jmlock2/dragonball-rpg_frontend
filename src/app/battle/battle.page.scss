@@ -254,8 +254,14 @@ ion-content {
 }
 
 .item-bean img, .item-water img {
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
     margin-left: 0px; /* Espacio entre el texto y la imagen */
 }
 
+.item-count {
+    color: #000000; /* Cambia el color a naranja */
+    font-family: 'Press Start 2P', sans-serif;
+    text-shadow: 0px 0px 5px #ffffff, 0px 0px 10px #ffffff; /* Resplandor blanco doble */
+
+  }
