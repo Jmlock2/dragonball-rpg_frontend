@@ -18,10 +18,10 @@ export class BattlePage implements OnInit {
 
   // Lista de batallas predefinidas
   public batallas = [
-    { name: 'Piccolo', escenario: 'assets/icon/battle/stages/torneo.png', sprite: 'assets/icon/battle/pjs/piccolo_battle.gif', imagenGolpe: 'assets/icon/battle/hits/piccolo_hit.png', attack_hit: 'assets/icon/battle/attacks/piccolo_attack.png', defense: 'assets/icon/battle/defense/piccolo_defense.png', defeated: 'assets/icon/battle/defeated/piccolo_derrotado.png' },
-    { name: 'Vegeta', escenario: 'assets/icon/battle/stages/desierto.png', sprite: 'assets/icon/battle/pjs/vegeta_battle.gif', imagenGolpe: 'assets/icon/battle/hits/vegeta_hit.png', attack_hit: 'assets/icon/battle/attacks/vegeta_attack.gif', defense: 'assets/icon/battle/defense/vegeta_defense.png', defeated: 'assets/icon/battle/defeated/vegeta_derrotado.png' },
-    { name: 'Trunks', escenario: 'assets/icon/battle/stages/ciudad.png', sprite: 'assets/icon/battle/pjs/trunks_battle.gif', imagenGolpe: 'assets/icon/battle/hits/trunks_hit.png', attack_hit: 'assets/icon/battle/attacks/trunks_attack.gif', defense: 'assets/icon/battle/defense/trunks_defense.png', defeated: 'assets/icon/battle/defeated/trunks_derrotado.png' },
-    { name: 'Freezer', escenario: 'assets/icon/battle/stages/namek.png', sprite: 'assets/icon/battle/pjs/freezer_battle.gif', imagenGolpe: 'assets/icon/battle/hits/freezer_hit.png', attack_hit: 'assets/icon/battle/attacks/freezer_attack.png', defense: 'assets/icon/battle/defense/freezer_defense.png', defeated: 'assets/icon/battle/defeated/freezer_derrotado.png' },
+    { name: 'Piccolo', escenario: 'assets/icon/battle/stages/torneo.png', sprite: 'assets/icon/battle/pjs/piccolo_battle.gif', imagenGolpe: 'assets/icon/battle/hits/piccolo_hit.png', attack_hit: 'assets/icon/battle/attacks/piccolo_attack.png', defense: 'assets/icon/battle/defense/piccolo_defense.png', defeated: 'assets/icon/battle/defeated/piccolo_derrotado.png', victory: 'assets/icon/battle/victory/piccolo_victory.png' },
+    { name: 'Vegeta', escenario: 'assets/icon/battle/stages/desierto.png', sprite: 'assets/icon/battle/pjs/vegeta_battle.gif', imagenGolpe: 'assets/icon/battle/hits/vegeta_hit.png', attack_hit: 'assets/icon/battle/attacks/vegeta_attack.gif', defense: 'assets/icon/battle/defense/vegeta_defense.png', defeated: 'assets/icon/battle/defeated/vegeta_derrotado.png', victory: 'assets/icon/battle/victory/vegeta_victory.png' },
+    { name: 'Trunks', escenario: 'assets/icon/battle/stages/ciudad.png', sprite: 'assets/icon/battle/pjs/trunks_battle.gif', imagenGolpe: 'assets/icon/battle/hits/trunks_hit.png', attack_hit: 'assets/icon/battle/attacks/trunks_attack.gif', defense: 'assets/icon/battle/defense/trunks_defense.png', defeated: 'assets/icon/battle/defeated/trunks_derrotado.png', victory: 'assets/icon/battle/victory/trunks_victory.png' },
+    { name: 'Freezer', escenario: 'assets/icon/battle/stages/namek.png', sprite: 'assets/icon/battle/pjs/freezer_battle.gif', imagenGolpe: 'assets/icon/battle/hits/freezer_hit.png', attack_hit: 'assets/icon/battle/attacks/freezer_attack.png', defense: 'assets/icon/battle/defense/freezer_defense.png', defeated: 'assets/icon/battle/defeated/freezer_derrotado.png', victory: 'assets/icon/battle/victory/freezer_victory.png' },
   ];
 
   // Lista del jugador
@@ -73,6 +73,7 @@ export class BattlePage implements OnInit {
       imagenGolpe: combateActual.imagenGolpe,
       attack_hit: combateActual.attack_hit,
       defense: combateActual.defense,
+      victory: combateActual.victory,
       defeated: combateActual.defeated,
       vida: 100,
       animando: false
@@ -88,9 +89,11 @@ export class BattlePage implements OnInit {
     if (this.jugador.items[item] > 0) { // 🔹 Si el jugador tiene items disponibles
       if (item === 'semilla') {
         this.jugador.vida = 100; // 🔹 Cura toda la vida
+        this.actualizarVidaJugador();
         this.mensaje = '¡Goku usó una Judia Senzu! Vida restaurada al 100%.';
       } else if (item === 'aguaKarin') {
         this.jugador.vida = Math.min(this.jugador.vida + 50, 100); // 🔹 Cura la mitad de la vida (50%)
+        this.actualizarVidaJugador();
         this.mensaje = '¡Goku bebió Agua Sagrada de Karin! Vida restaurada parcialmente.';
       }
 
@@ -102,7 +105,6 @@ export class BattlePage implements OnInit {
       this.mensaje = "¡No te quedan más de este ítem!";
     }
   }
-
 
   // ATAQUE DEL JUGADOR
   atacar() {
@@ -152,6 +154,7 @@ export class BattlePage implements OnInit {
 
     if (!this.turnoJugador) return; // Verifica si es el turno del jugador
 
+    this.turnoJugador = false;
     this.mensaje = `¡Goku se pone en guardia!.`;
     this.defendiendo = true; // Activa la defensa
     this.jugador.sprite = 'assets/icon/battle/defense/goku_defense.png'; // Cambia la imagen del jugador a la de defensa
@@ -195,6 +198,7 @@ export class BattlePage implements OnInit {
         if (this.rival.vida <= 0) {
           this.rival.vida = 0;
           this.rival.sprite = this.rival.defeated;
+          this.jugador.sprite = 'assets/icon/battle/victory/goku_victory.png';
           this.mensaje = "¡Goku Wins!";
           return;
         }
@@ -262,6 +266,7 @@ export class BattlePage implements OnInit {
         if (this.jugador.vida <= 0) {
           this.jugador.vida = 0;  // Establece la vida del jugador en 0
           this.jugador.sprite = 'assets/icon/battle/defeated/goku_derrotado.png'; // Cambia la imagen del jugador a la de derrota
+          this.rival.sprite = this.rival.victory;
           this.mensaje = `GAME OVER!`; // Si el jugador pierde, GAME OVER
           setTimeout(() => this.router.navigate(['rpg']), 5000);
           return;
