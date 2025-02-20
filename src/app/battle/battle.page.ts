@@ -138,6 +138,7 @@ export class BattlePage implements OnInit {
         if (this.rival.vida <= 0) {
           this.rival.vida = 0;
           this.rival.sprite = this.rival.defeated;
+          this.jugador.sprite = 'assets/icon/battle/victory/goku_victory.png';
           this.mensaje = "¡Goku Wins!";
           return;
         }
@@ -331,10 +332,48 @@ export class BattlePage implements OnInit {
   actualizarRanking(): void {
     this.auth.user$.subscribe(user => {
       if (user) {
+        // Puntos según la ronda actual
+        let puntosPorRonda = [50, 100, 150, 200]; 
+        let puntos = this.ronda < puntosPorRonda.length ? puntosPorRonda[this.ronda] : 200; // Máximo 200 puntos en la última ronda
+        
+        let data = {
+          auth0_id: user.sub, // ID de Auth0
+          name: user.name, // Nombre del usuario
+          score: puntos // Puntos basados en la ronda
+        };
+  
+        console.log(`🏆 Enviando actualización de ranking: ${puntos} puntos`, data);
+  
+        this.http.put('https://dragonball-rpg-backend.onrender.com/ranking', data).subscribe({
+          next: (response: any) => {
+            console.log("✅ Ranking actualizado correctamente:", response);
+          },
+          error: (error) => {
+            console.error("❌ Error al actualizar ranking:", error);
+          }
+        });
+      }
+    });
+  }
+  
+  
+}
+
+
+// CUANDO EL JUGADOR PIERDA, LAS RONDAS SERÁN RESETEADAS
+
+// AGREGAR SONIDO AL JUEGO
+
+// CREAR BASE DE DATOS EN RENDER.COM PARA LA SUMA DE PUNTOS (RANKING)
+
+/* Antiguo código actualizarRanking 
+actualizarRanking(): void {
+    this.auth.user$.subscribe(user => {
+      if (user) {
         const data = {
           auth0_id: user.sub, // ID de Auth0
           name: user.name, // Nombre del usuario
-          score: 100 // Se sumarán 100 puntos por victoria
+          score: 10 // Se sumarán 100 puntos por victoria
         };
   
         console.log("🏆 Enviando actualización de ranking:", data);
@@ -349,13 +388,4 @@ export class BattlePage implements OnInit {
         });
       }
     });
-  }
-  
-}
-
-
-// CUANDO EL JUGADOR PIERDA, LAS RONDAS SERÁN RESETEADAS
-
-// AGREGAR SONIDO AL JUEGO
-
-// CREAR BASE DE DATOS EN RENDER.COM PARA LA SUMA DE PUNTOS (RANKING)
+  } */
