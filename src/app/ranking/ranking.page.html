@@ -7,7 +7,7 @@
         <h2>Ranking de Jugadores</h2>
       </ion-col>
     </ion-row>
-    
+
     <!-- Encabezados de columna -->
     <ion-row class="ranking-header">
       <ion-col size="2">
@@ -20,7 +20,7 @@
         <h3>Puntos</h3>
       </ion-col>
     </ion-row>
-    
+
     <!-- Lista de jugadores -->
     <ion-row *ngFor="let player of ranking; let i = index" class="ranking-item">
       <ion-col size="2">
@@ -34,4 +34,13 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- Botón para ir a la pantalla de rpg -->
+  <ion-row class="ion-text-left ion-margin-bottom">
+    <ion-col size="12">
+      <ion-button (click)="irARpg()" fill="clear">EXIT
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonItem, IonLabel, IonCol, IonRow, IonGrid } from '@ionic/angular/standalone';
+import { IonContent, IonList, IonItem, IonLabel, IonCol, IonRow, IonGrid, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { AuthService } from '@auth0/auth0-angular';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Router } from '@angular/router'; // Importa Router para la redirección
@@ -11,7 +11,7 @@ import { Router } from '@angular/router'; // Importa Router para la redirección
   templateUrl: './ranking.page.html',
   styleUrls: ['./ranking.page.scss'],
   standalone: true,
-  imports: [IonGrid, IonRow, IonCol, IonContent, CommonModule, FormsModule]
+  imports: [IonIcon, IonButton, IonGrid, IonRow, IonCol, IonContent, CommonModule, FormsModule]
 })
 export class RankingPage implements OnInit {
 
@@ -34,5 +34,9 @@ export class RankingPage implements OnInit {
         console.error("❌ Error al obtener ranking:", error);
       }
     });
+  }
+
+  irARpg() {
+    this.router.navigate(['/rpg']);
   }
 }
